@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fernandobell.workshopmongo.UserDTO.UserDTO;
 import com.fernandobell.workshopmongo.domain.User;
 import com.fernandobell.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,9 @@ public class UserResource {
     private UserService service;
 
     @GetMapping // Annotation para validar o method GET
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDTO>> findAll() {
         List<User> list = service.findeAll(); // Busca la no banco de dados os usuarios
-        return ResponseEntity.ok().body(list); // Devolve a lista
+        List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).toList(); // converte a lista de User para UserDTO
+        return ResponseEntity.ok().body(listDto); // Devolve a lista
     }
 }
