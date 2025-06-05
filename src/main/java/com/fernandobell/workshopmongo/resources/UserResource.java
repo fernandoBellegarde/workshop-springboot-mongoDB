@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.fernandobell.workshopmongo.UserDTO.UserDTO;
+import com.fernandobell.workshopmongo.domain.Post;
 import com.fernandobell.workshopmongo.domain.User;
 import com.fernandobell.workshopmongo.services.UserService;
 
@@ -61,4 +62,13 @@ public class UserResource {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/{id}/posts") // Define que esse método responde a requisições GET no endpoint /users/{id}/posts
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        // Busca o usuário pelo id informado na URL (path variable)
+        User obj = service.findById(id);
+        // Retorna a lista de posts do usuário encontrado, dentro do corpo da resposta HTTP com status 200 OK
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
+
 }
