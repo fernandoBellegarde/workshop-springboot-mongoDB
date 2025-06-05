@@ -1,24 +1,29 @@
 package com.fernandobell.workshopmongo.domain;
 
+import com.fernandobell.workshopmongo.UserDTO.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
 @Document
-public class Post {
+public class Post implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
     private Instant date;
     private String title;
     private String body;
-    private User author;
+    private AuthorDTO author;
 
     public Post() {}
 
-    public Post(String id, Instant date, String title, String body, User author) {
+    public Post(String id, Instant date, String title, String body, AuthorDTO author) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -61,11 +66,11 @@ public class Post {
         this.body = body;
         return this;
     }
-    public User getAuthor() {
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public Post setAuthor(User author) {
+    public Post setAuthor(AuthorDTO author) {
         this.author = author;
         return this;
     }
