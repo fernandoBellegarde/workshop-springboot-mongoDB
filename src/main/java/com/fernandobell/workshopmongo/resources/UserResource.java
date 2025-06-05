@@ -52,4 +52,13 @@ public class UserResource {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/{id}")// ✅ Mapeia requisições PUT para /users
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+        User obj = service.fromDTO(objDto); // ✅ Converte o DTO para entidade User
+        obj.setId(id);
+        obj = service.update(obj); // ✅ Insere o usuário no banco (ID gerado pelo MongoDB)
+
+        return ResponseEntity.noContent().build();
+    }
 }
