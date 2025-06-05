@@ -1,10 +1,13 @@
 package com.fernandobell.workshopmongo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Document(collection = "user")
@@ -16,6 +19,9 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
+            // lazy = true garante que os posts so vao ser carregados se eu explicitamente acessa-los
+    @DBRef(lazy = true) // Para falar que um atributo está referenciando outra coleção do mongoDB no caso a coleção Post
+    private List<Post> posts = new ArrayList<>();
 
     public User() {
 
@@ -49,6 +55,15 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public User setPosts(List<Post> posts) {
+        this.posts = posts;
+        return this;
     }
     @Override
     public boolean equals(Object o) {
