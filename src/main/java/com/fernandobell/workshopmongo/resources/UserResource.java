@@ -46,4 +46,10 @@ public class UserResource {
 
         return ResponseEntity.created(uri).build(); // ✅ Retorna 201 Created que é o codigo que retorna que foi criado
     }
+
+    @DeleteMapping(value = "/{id}") // ✅ Outra forma (melhor) de fazer o mesmo que RequestMapping com method=GET
+    public ResponseEntity<UserDTO> delete(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
